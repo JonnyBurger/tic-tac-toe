@@ -107,6 +107,14 @@ class Lobby extends Component {
               <ButtonContainer>
                 <ButtonLink
                   width={250}
+                  location={'mygames'}
+                >
+                  My Games
+                </ButtonLink>
+              </ButtonContainer>
+              <ButtonContainer>
+                <ButtonLink
+                  width={250}
                   location={'games/' + this.props.account.ethAddress}
                 >
                   Create Game
