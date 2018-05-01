@@ -79,6 +79,21 @@ const StartGameButton = styled.div`
   margin-left: 2em;
 `;
 
+const PlayGameButton = styled.div`
+  &:hover {
+    border: 2px solid #e4751b;
+  }
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  box-shadow: 0 0 3px 3px rgba(168, 221, 224, 0.5);
+  border-radius: 18px;
+  flex-direction: column;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+  margin-left: 2em;
+`;
+
 const ParentContainer = styled.div`
   display: flex;
   align-items: center;
@@ -302,6 +317,17 @@ class MyGames extends Component {
                           </GameIcon>
                           <JoinParagraph>Start</JoinParagraph>
                         </StartGameButton>
+                      ) : (game.status == 'X_HAS_TURN' || game.status == 'O_HAS_TURN') ? (
+                        <PlayGameButton>
+                          <GameIcon
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 640 512"
+                          >
+                            <path
+                              d="M480 96H160C71.6 96 0 167.6 0 256s71.6 160 160 160c44.8 0 85.2-18.4 114.2-48h91.5c29 29.6 69.5 48 114.2 48 88.4 0 160-71.6 160-160S568.4 96 480 96zM256 276c0 6.6-5.4 12-12 12h-52v52c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-52H76c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h52v-52c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h52c6.6 0 12 5.4 12 12v40zm184 68c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48zm80-80c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48z"/>
+                          </GameIcon>
+                          <JoinParagraph>Play</JoinParagraph>
+                        </PlayGameButton>
                       ) : (<StartGameButton/>)}
                     </td>
                   </tr>
