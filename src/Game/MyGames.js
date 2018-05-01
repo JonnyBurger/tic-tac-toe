@@ -96,7 +96,7 @@ const StatusContainer = styled.div`
   );
 `;
 
-class JoinGame extends Component {
+class MyGames extends Component {
   constructor() {
     super();
 
@@ -185,9 +185,9 @@ class JoinGame extends Component {
     return status;
   }
 
-  joinGame(game, playerName) {
+  startGame(game, playerName) {
     this.props.contract.methods
-      .joinGame(game.id, this.props.web3.utils.fromAscii(playerName))
+      .startGame(game.id)
       .send({from: this.props.account.ethAddress})
       .on('transactionHash', tx => {
         this.addNewTx(tx, game.id);
@@ -203,19 +203,7 @@ class JoinGame extends Component {
         console.log(res);
         const returnValues = res.events.Joined.returnValues;
         if (res.status === '0x1') {
-          console.log(
-            res.events.Joined.returnValues[3] +
-            ' joined game ' +
-            res.events.Joined.returnValues[1] +
-            ' and has symbol ' +
-            res.events.Joined.returnValues[4]
-          );
-          console.log(
-            this.props.web3.utils.toAscii(returnValues.playerName) +
-            ' joined game ' +
-            returnValues.gameId +
-            ' and has symbol ' +
-            returnValues.symbol
+          console.log('game started successfully'
           );
           this.state.games.forEach(g => {
             if (game.id === g.id) {
@@ -223,7 +211,7 @@ class JoinGame extends Component {
             }
             this.setState({games: this.state.games});
           });
-        } else console.log('not possible to join');
+        } else console.log('not possible to start game');
       })
       .on('confirmation', function (confirmationNr) {
         // is returned for the first 24 block confirmations
@@ -297,12 +285,11 @@ class JoinGame extends Component {
                       <StatusContainer>{game.status}</StatusContainer>
                     </td>
                     <td style={{width: 120}}>
-                      {(game.status == 'READY') ? (
+                      {(game.status == 'READY' && game.owner == this.props.account.ethAddress) ? (
                         <StartGameButton
                           onClick={() => {
-                            this.joinGame(
-                              game,
-                              localStorage.getItem('username')
+                            this.startGame(
+                              game
                             );
                           }}
                         >
@@ -334,4 +321,4 @@ class JoinGame extends Component {
   }
 }
 
-export default JoinGame;
+export default MyGames;
